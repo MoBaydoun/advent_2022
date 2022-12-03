@@ -19,7 +19,10 @@ fn main() {
         tracker += curr.parse::<i32>().expect("Couldn't parse");
     }
 
-    let result = find_largest(numbers);
+    let mut result = find_largest(&numbers);
+    println!("Result: {}", result);
+
+    result = top_three_total(&mut numbers);
     println!("Result: {}", result);
 }
 
@@ -30,9 +33,14 @@ where T: std::fmt::Display {
     }
 }
 
-fn find_largest(vec: Vec<i32>) -> i32 {
+fn find_largest(vec: &Vec<i32>) -> i32 {
     let mut largest: i32 = i32::MIN;
     vec.iter()
         .for_each(|i| {largest = if i > &largest {*i} else {largest}});
     return largest;
+}
+
+fn top_three_total(vec: &mut Vec<i32>) -> i32 {
+    vec.sort_by(|a, b| b.cmp(a));
+    return vec[0] + vec[1] + vec[2];
 }
